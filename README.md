@@ -25,9 +25,22 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+**Game purpose**: A number guessing game built with Streamlit where players pick a difficulty level and try to guess a secret number within a limited number of attempts. The game provides hints (Too High / Too Low) and tracks a running score.
+
+**Bugs found**:
+1. **Swapped hints** — `check_guess` returned "Too High" with message "Go HIGHER!" and "Too Low" with "Go LOWER!" — the directions were completely backwards.
+2. **Wrong Hard mode range** — `get_range_for_difficulty("Hard")` returned `(1, 50)`, which is narrower than Normal, not wider as intended.
+3. **Type inconsistency on even attempts** — `app.py` converted the secret number to a string on every even attempt, causing unpredictable comparison results in `check_guess`.
+4. **Hardcoded range in UI text** — The info message always displayed "1 and 100" regardless of selected difficulty.
+5. **New Game button ignored difficulty** — It always called `random.randint(1, 100)` instead of using the current difficulty range.
+
+**Fixes applied**:
+- Implemented all 4 logic functions in `logic_utils.py` with correct behavior.
+- Fixed `check_guess` hint directions: "Too High" now says "Go LOWER!", "Too Low" says "Go HIGHER!".
+- Fixed Hard difficulty range to `(1, 200)`.
+- Updated `app.py` to import from `logic_utils.py` and removed duplicate function definitions.
+- Replaced hardcoded range display and New Game button with dynamic `low`/`high` values from the difficulty function.
+- Removed the string-conversion bug — `check_guess` always receives integer arguments.
 
 ## 📸 Demo
 
